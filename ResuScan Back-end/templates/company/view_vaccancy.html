@@ -1,0 +1,198 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#  <table width="823" height="139" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Sl no</th>#}
+{#        <th>COMPANY</th>#}
+{#        <th>email</th>#}
+{#        <th>place</th>#}
+{#        <th>phone</th>#}
+{#        <th>location</th>#}
+{#        <td>Date</td>#}
+{#      <td>Job Title</td>#}
+{#      <td>Description</td>#}
+{#      <td>Skill</td>#}
+{#      <td>Experience</td>#}
+{#      <td>Salary</td>#}
+{#      <td>Status</td>#}
+{#      <td>From Date</td>#}
+{#      <td>To Date</td>#}
+{#      <td>Company</td>#}
+{#      <td>Action</td>#}
+{#    </tr>#}
+{#      {% for i in data %}#}
+{#    <tr>#}
+{#      <th scope="row">&nbsp;</th>#}
+{#      <td>&nbsp;{{ forloop.counter }}</td>#}
+{#        <td>{{ i.date }}</td>#}
+{#      <td>&nbsp;{{ i.job_title }}</td>#}
+{#      <td>&nbsp;{{ i.description }}</td>#}
+{#      <td>&nbsp;{{i.skills  }}</td>#}
+{#      <td>&nbsp;{{i.experience }}</td>#}
+{#      <td>{{i.salary_range }}&nbsp;</td>#}
+{#      <td>{{i.status }}</td>#}
+{#      <td>{{i.fromdate }}</td>#}
+{#      <td>&nbsp;{{i.todate}}</td>#}
+{#      <td><p><a href="/editvaccancy/{{ i.id }}">Edit</a></p>#}
+{#      <p><a href="/deletevaccancy/{{ i.id }}">Delete</a></p></td>#}
+{#    </tr>#}
+{#      {% endfor %}#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacancy List – Company Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            font-family: "Inter", sans-serif;
+            padding: 30px 0;
+        }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .card-custom {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        table th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            background: #eef2ff !important;
+        }
+
+        table tbody tr:hover {
+            background: #f3f6ff;
+        }
+
+        .btn-edit {
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .btn-delete {
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+    <h2 class="page-title">Posted Vacancies</h2>
+
+    <div class="card-custom">
+        <div class="table-responsive">
+            <table id="vacancyTable" class="table table-bordered table-hover align-middle">
+                <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Date</th>
+                    <th>Job Title</th>
+                    <th>Description</th>
+                    <th>Skills</th>
+                    <th>Experience</th>
+                    <th>Salary</th>
+                    <th>Status</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for i in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.job_title }}</td>
+                        <td>{{ i.description }}</td>
+                        <td>{{ i.skills }}</td>
+                        <td>{{ i.experience }}</td>
+                        <td>{{ i.salary_range }}</td>
+                        <td><span class="status-pill">{{ i.status }}</span></td>
+                        <td>{{ i.from_date }}</td>
+                        <td>{{ i.to_date }}</td>
+
+                        <td>
+                            <a href="/editvaccancy/{{ i.id }}" class="btn btn-primary btn-edit">Edit</a>
+                            <a href="/deletevaccancy/{{ i.id }}" class="btn btn-danger btn-delete mt-1">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#vacancyTable').DataTable();
+    });
+</script>
+
+</body>
+</html>
+

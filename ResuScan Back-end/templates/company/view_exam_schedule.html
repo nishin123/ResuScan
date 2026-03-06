@@ -1,0 +1,216 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form action="" method="get"><table width="200" border="1">#}
+{#  <tr>#}
+{#    <th scope="col">slno</th>#}
+{#    <th scope="col">date</th>#}
+{#    <th scope="col">time</th>#}
+{#    <th scope="col">venue</th>#}
+{#    <th scope="col">action</th>#}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <td>{{ forloop.counter }}</td>#}
+{#    <td>{{ i.date }}</td>#}
+{#    <td>{{ i.time }}</td>#}
+{#    <td>{{ i.venue }}</td>#}
+{#    <td><p><a href="/addquestions/{{ i.id }}">add question</a></p>#}
+{#      <p><a href="/viewquestion">view question</a></p></td>#}
+{#  </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ResuScan – Interview Schedules</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#2563eb;
+    --success:#16a34a;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(0,0,0,0.08);
+}
+
+*{
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    padding:40px;
+}
+
+/* Card */
+.page-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+}
+
+/* Header */
+.page-header{
+    margin-bottom:24px;
+}
+
+.page-header h2{
+    margin:0;
+    font-size:1.7rem;
+}
+
+.page-header p{
+    margin-top:6px;
+    color:var(--muted);
+}
+
+/* Table */
+.table-wrapper{
+    overflow-x:auto;
+    border-radius:14px;
+    border:1px solid var(--border);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+thead th{
+    background:#eff6ff;
+    padding:14px;
+    font-weight:600;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+    font-size:.9rem;
+}
+
+tbody td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    font-size:.9rem;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* Actions */
+.actions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.action-btn{
+    display:inline-block;
+    padding:7px 16px;
+    border-radius:999px;
+    font-size:.75rem;
+    font-weight:600;
+    text-decoration:none;
+    text-align:center;
+    transition:.2s;
+}
+
+.add-btn{
+    background:#dcfce7;
+    color:var(--success);
+}
+
+.add-btn:hover{
+    background:#bbf7d0;
+}
+
+.view-btn{
+    background:#dbeafe;
+    color:var(--primary);
+}
+
+.view-btn:hover{
+    background:#bfdbfe;
+}
+
+/* Mobile */
+@media(max-width:600px){
+    body{
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-card">
+
+    <div class="page-header">
+        <h2>Interview / Exam Schedules</h2>
+        <p>Manage schedules and related questions</p>
+    </div>
+
+    <form action="" method="get">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Venue</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for i in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.time }}</td>
+                        <td>{{ i.venue }}</td>
+                        <td>
+                            <div class="actions">
+                                <a href="/addquestions/{{ i.id }}" class="action-btn add-btn">
+                                    Add Questions
+                                </a>
+                                <a href="/viewquestion/{{ i.id }}" class="action-btn view-btn">
+                                    View Questions
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

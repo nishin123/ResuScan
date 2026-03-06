@@ -1,0 +1,204 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#  <table width="823" height="139" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Sl no</th>#}
+{#      <td>Questions</td>#}
+{#      <td>Option A</td>#}
+{#      <td>Option B</td>#}
+{#      <td>Option C</td>#}
+{#      <td>Option D</td>#}
+{#      <td>Corrected Answers</td>#}
+{#      <td></td>#}
+{#    </tr>#}
+{#      {% for i in data %} }}#}
+{#    <tr>#}
+{#      <th scope="row">&nbsp;</th>#}
+{#      <td>{{ forloop.counter }}&nbsp;</td>#}
+{#      <td>&nbsp;{{ i.questions }}</td>#}
+{#      <td>&nbsp;{{ i.option_a }}</td>#}
+{#      <td>&nbsp;{{ i.option_b }}</td>#}
+{#      <td>&nbsp;{{ i.option_c }}</td>#}
+{#      <td>&nbsp;{{ i.option_d}}</td>#}
+{#        <td>{{ i.corrected_answer }}</td>#}
+{##}
+{#      <td><p><a href="#">Edit</a></p>#}
+{#      <p><a href="#">Delete</a></p></td>#}
+{#    </tr>#}
+{#      {%endfor%}#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ResuScan – View Questions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#2563eb;
+    --danger:#dc2626;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(0,0,0,0.08);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body {
+    background:var(--bg);
+    padding:40px;
+}
+
+/* Page Card */
+.card {
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+}
+
+/* Header */
+.card h1 {
+    font-size:1.7rem;
+    margin-bottom:8px;
+}
+
+.card p {
+    color:var(--muted);
+    margin-bottom:22px;
+}
+
+/* Table */
+.table-wrapper {
+    overflow-x:auto;
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+thead th {
+    background:#eff6ff;
+    color:var(--text);
+    font-weight:600;
+    padding:14px;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+}
+
+tbody td {
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+    font-size:0.9rem;
+}
+
+tbody tr:hover {
+    background:#f8fafc;
+}
+
+/* Action buttons */
+.action-btn {
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:0.8rem;
+    font-weight:600;
+    text-decoration:none;
+    margin-right:6px;
+    transition:0.2s;
+}
+
+.edit-btn {
+    background:#dbeafe;
+    color:var(--primary);
+}
+
+.edit-btn:hover {
+    background:#bfdbfe;
+}
+
+.delete-btn {
+    background:#fee2e2;
+    color:var(--danger);
+}
+
+.delete-btn:hover {
+    background:#fecaca;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Questions List</h1>
+    <p>Manage all screening questions</p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Question</th>
+                    <th>Option A</th>
+                    <th>Option B</th>
+                    <th>Option C</th>
+                    <th>Option D</th>
+                    <th>Correct Answer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.questions }}</td>
+                    <td>{{ i.option_a }}</td>
+                    <td>{{ i.option_b }}</td>
+                    <td>{{ i.option_c }}</td>
+                    <td>{{ i.option_d }}</td>
+                    <td><strong>{{ i.corrected_answer }}</strong></td>
+                    <td>
+                        <a href="/editquestion/{{ i.id }}" class="action-btn edit-btn">Edit</a>
+                        <a href="/deletequestions/{{ i.id }}" class="action-btn delete-btn" onclick="return confirm('are you sure')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

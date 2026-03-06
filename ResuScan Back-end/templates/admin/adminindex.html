@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ResuScan – Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #e0f2fe 0, #f9fafb 38%, #eef2ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #0f172a;
+        }
+
+        .dashboard-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 24px 28px 32px;
+            box-shadow:
+                0 20px 60px rgba(15, 23, 42, 0.09),
+                0 0 0 1px rgba(148, 163, 184, 0.16);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand img {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow:
+                0 10px 25px rgba(37,99,235,0.25),
+                0 0 0 1px rgba(255,255,255,0.8);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .brand-text h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-text p {
+            font-size: 0.88rem;
+            color: #6b7280;
+        }
+
+        .admin-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-badge {
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.11em;
+            background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+            color: #1d4ed8;
+            box-shadow: 0 4px 12px rgba(148,163,184,0.2);
+        }
+
+        .logout-btn {
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #dc2626;
+            border: 1px solid rgba(220,38,38,0.4);
+            background: #fff;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #fee2e2;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220,38,38,0.15);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
+        .dashboard-main {
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, #ffffff, #f9fafb);
+            border-radius: 18px;
+            padding: 22px 20px;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow:
+                0 12px 30px rgba(15, 23, 42, 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 20px 40px rgba(37, 99, 235, 0.12),
+                0 0 0 1px rgba(129, 140, 248, 0.3);
+            border-color: rgba(129, 140, 248, 0.6);
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-card:active {
+            transform: translateY(-2px);
+        }
+
+        .module-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: #1d4ed8;
+            font-size: 1.2rem;
+        }
+
+        .module-label {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .module-desc {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .module-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .module-card:nth-child(1) .module-icon { background: linear-gradient(135deg, #dbeafe, #e0f2fe); color: #1d4ed8; }
+        .module-card:nth-child(2) .module-icon { background: linear-gradient(135deg, #e0f2fe, #dbeafe); color: #1d4ed8; }
+        .module-card:nth-child(3) .module-icon { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); color: #0ea5e9; }
+        .module-card:nth-child(4) .module-icon { background: linear-gradient(135deg, #fef3c7, #fef9c3); color: #d97706; }
+        .module-card:nth-child(5) .module-icon { background: linear-gradient(135deg, #fef3c7, #fef9c3); color: #d97706; }
+        .module-card:nth-child(6) .module-icon { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #dc2626; }
+        .module-card:nth-child(7) .module-icon { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #059669; }
+
+        .dashboard-footer {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(226, 232, 240, 0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-icon {
+            width: 18px;
+            height: 18px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-wrapper {
+                padding: 20px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .admin-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .logout-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+    <header class="dashboard-header">
+        <div class="brand">
+            <img src="/static/img/loginlogo.png" alt="ResuScan Logo">
+            <div class="brand-text">
+                <h1>ResuScan Admin</h1>
+                <p>AI-powered resume screening dashboard</p>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <span class="admin-badge">
+                <i class="fas fa-shield-alt"></i> ADMIN PANEL
+            </span>
+            <a href="/logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="section-header">
+            <h2 class="section-title">Administration Modules</h2>
+            <p class="section-subtitle">Manage all aspects of the ResuScan platform</p>
+        </div>
+
+        <div class="modules-grid">
+            <a href="/view_verify_company" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="module-label">Company Verification</div>
+                <div class="module-desc">Review and approve new company registrations requiring platform access</div>
+                <span class="module-status">Pending Approvals</span>
+            </a>
+
+            <a href="/view_verified_company" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="module-label">Verified Companies</div>
+                <div class="module-desc">Manage all approved companies and their platform access permissions</div>
+                <span class="module-status">Active Companies</span>
+            </a>
+
+            <a href="/view_candidates" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="module-label">Candidate Management</div>
+                <div class="module-desc">Browse, search, and manage candidate profiles and resumes</div>
+                <span class="module-status">All Candidates</span>
+            </a>
+
+            <a href="/view_review_rating" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="module-label">Reviews & Ratings</div>
+                <div class="module-desc">Monitor and manage user reviews and platform rating submissions</div>
+                <span class="module-status">Platform Feedback</span>
+            </a>
+
+            <a href="/view_feedback" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-comment-alt"></i>
+                </div>
+                <div class="module-label">User Feedback</div>
+                <div class="module-desc">Read and respond to general user feedback and suggestions</div>
+                <span class="module-status">User Insights</span>
+            </a>
+
+            <a href="/view_complaints" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="module-label">Complaint Resolution</div>
+                <div class="module-desc">Address and resolve user-reported issues and platform complaints</div>
+                <span class="module-status">Active Issues</span>
+            </a>
+
+            <a href="/Changepassword" class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="module-label">Security Settings</div>
+                <div class="module-desc">Update admin credentials and manage authentication settings</div>
+                <span class="module-status">Admin Access</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="dashboard-footer">
+        <div class="footer-info">
+            <div class="user-info">
+                <i class="fas fa-user-circle user-icon"></i>
+                <span>Logged in as: <strong>Admin</strong></span>
+            </div>
+            <div class="session-info">
+                <i class="fas fa-clock user-icon"></i>
+                <span>Session Active</span>
+            </div>
+        </div>
+        <div class="copyright">
+            ResuScan © 2025 | AI-Powered Recruitment Platform
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

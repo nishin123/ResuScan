@@ -1,0 +1,238 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>View Vacancy Request</title>#}
+{#    <style>#}
+{#        table {#}
+{#            border-collapse: collapse;#}
+{#        }#}
+{#        th, td {#}
+{#            border: 1px solid black;#}
+{#            padding: 8px;#}
+{#            text-align: left;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<form action="" method="get">#}
+{#<table>#}
+{#    <tr>#}
+{#        <th width="53">S/no</th>#}
+{#        <th width="150">Requested Date</th>#}
+{#        <th width="90">Job Title</th>#}
+{#        <th width="101">User Name</th>#}
+{#        <th width="96">User Email</th>#}
+{#        <th width="62">Place</th>#}
+{#        <th width="179">Action</th>#}
+{#    </tr>#}
+{#    {% for i in data %}#}
+{#    <tr>#}
+{#        <td>{{ forloop.counter }}</td>#}
+{#        <td>{{ i.date }}</td>#}
+{#        <td>{{ i.VACCANCY.job_title }}</td>#}
+{#        <td>{{ i.USER.name }}</td>#}
+{#        <td>{{ i.USER.email }}</td>#}
+{#        <td>{{ i.USER.place }}</td>#}
+{#        <td>  <a href="/add_interview_schedule/{{ i.id }}">ADD Scedule</a><br>#}
+{#           <a href="/view_interview_schedule/{{ i.id }}">View schedule</a>#}
+{#</td>#}
+{#    </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ResuScan – View Vacancy Requests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#2563eb;
+    --success:#16a34a;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(0,0,0,0.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:var(--bg);
+    padding:40px;
+}
+
+/* Page Card */
+.page-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+}
+
+/* Header */
+.page-header{
+    margin-bottom:24px;
+}
+
+.page-header h1{
+    font-size:1.7rem;
+}
+
+.page-header p{
+    color:var(--muted);
+    margin-top:6px;
+}
+
+/* Table */
+.table-wrapper{
+    overflow-x:auto;
+    border-radius:14px;
+    border:1px solid var(--border);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+thead th{
+    background:#eff6ff;
+    padding:14px;
+    font-weight:600;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+    font-size:.9rem;
+}
+
+tbody td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    font-size:.9rem;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* Action buttons */
+.actions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.action-btn{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:.75rem;
+    font-weight:600;
+    text-decoration:none;
+    text-align:center;
+    transition:.2s;
+}
+
+.add-btn{
+    background:#dcfce7;
+    color:var(--success);
+}
+
+.add-btn:hover{
+    background:#bbf7d0;
+}
+
+.view-btn{
+    background:#dbeafe;
+    color:var(--primary);
+}
+
+.view-btn:hover{
+    background:#bfdbfe;
+}
+
+/* Mobile */
+@media(max-width:768px){
+    body{
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-card">
+
+    <div class="page-header">
+        <h1>Vacancy Requests</h1>
+        <p>Manage interview scheduling requests</p>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Requested Date</th>
+                    <th>Job Title</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                    <th>Place</th>
+                    <th>Resume</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.date }}</td>
+                    <td>{{ i.VACCANCY.job_title }}</td>
+                    <td>{{ i.USER.name }}</td>
+                    <td>{{ i.USER.email }}</td>
+                    <td>{{ i.USER.place }}</td>
+                    <td><a href="{{ i.resume }}">view</a></td>
+                    <td>
+                        <div class="actions">
+                            <a href="/add_interview_schedule/{{ i.id }}" class="action-btn add-btn">
+                                Add Schedule
+                            </a>
+                            <a href="/view_interview_schedule/{{ i.id }}" class="action-btn view-btn">
+                                View Schedule
+                            </a>
+                            <a href="/shortlist_resume/{{ i.id }}" class="action-btn view-btn">
+                                shortlist
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ResuScan – Login</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card */
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 30px 26px 26px;
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.05),
+    0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.brand-logo-wrap {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  border-radius: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1f2933;
+}
+
+.brand-name span {
+  color: #2563eb;
+}
+
+.brand-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+/* Inputs */
+.field {
+  margin-bottom: 18px;
+}
+
+.input-icon-box {
+  position: relative;
+}
+
+.input-icon-box .left-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+  z-index: 2; /* Ensure left icons are above */
+}
+
+.input-box {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 45px 14px 42px; /* Adjusted for both icons */
+  background: #f9fafb;
+  transition: 0.15s ease;
+  position: relative;
+}
+
+.input-box:focus-within {
+  background: #ffffff;
+  border-color: #2563eb;
+}
+
+.input-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+/* Password toggle button - ONLY for password field */
+.password-field .input-box {
+  padding-right: 45px; /* Extra space for toggle button */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2; /* Ensure toggle is above */
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+
+.toggle-password img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Row */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.row-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-left input {
+  width: 14px;
+  height: 14px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.row a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.row a:hover {
+  text-decoration: underline;
+}
+
+/* Button */
+.btn {
+  margin-top: 18px;
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  transition: 0.15s ease;
+}
+
+.btn img {
+  width: 20px;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Footer / Register */
+.footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.footer a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-logo-wrap">
+      <img src="/static/img/loginlogo.png" alt="ResuScan Logo">
+    </div>
+    <div>
+      <div class="brand-name">Resu<span>Scan</span></div>
+      <div class="brand-sub">AI Resume Intelligence</div>
+    </div>
+  </div>
+
+  <div style="font-size:1.25rem;font-weight:600;color:#111827;">
+    Sign in to your workspace
+  </div>
+
+  <div style="font-size:0.86rem;color:#6b7280;margin-bottom:20px;">
+    Please enter your credentials below.
+  </div>
+
+  <form method="post" action="/log_post" id="loginForm">
+
+    <!-- Email -->
+    <div class="field">
+      <div class="input-icon-box">
+        <img src="/static/img/email.png" class="left-icon">
+        <div class="input-box">
+          <input type="text" name="username" id="username" placeholder="Enter your username" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="field password-field">
+      <div class="input-icon-box">
+        <img src="/static/img/passicon.png" class="left-icon">
+        <div class="input-box">
+          <input type="password" name="password" id="password" placeholder="Enter password" required />
+          <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+            <img src="/static/img/show.png" alt="Show password">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="row-left">
+        <input type="checkbox" id="rememberMe"> Keep me signed in
+      </label>
+      <a href="/forgotpassword">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="btn">
+      Login
+      <img src="/static/img/login.png">
+    </button>
+
+  </form>
+
+  <!-- Register -->
+  <div class="footer">
+    Don't have an account?
+    <a href="/register">Create one</a>
+  </div>
+
+</div>
+{##}
+{#<script>#}
+{#// Password toggle functionality#}
+{#const togglePassword = document.getElementById('togglePassword');#}
+{#const passwordInput = document.getElementById('password');#}
+{#const toggleIcon = togglePassword.querySelector('img');#}
+{##}
+{#togglePassword.addEventListener('click', function() {#}
+{#  // Toggle password visibility#}
+{#  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';#}
+{#  passwordInput.setAttribute('type', type);#}
+{##}
+{#  // Toggle icon#}
+{#  if (type === 'text') {#}
+{#    toggleIcon.src = '/static/img/hide.png';#}
+{#    toggleIcon.alt = 'Hide password';#}
+{#    togglePassword.setAttribute('aria-label', 'Hide password');#}
+{#  } else {#}
+{#    toggleIcon.src = '/static/img/show.png';#}
+{#    toggleIcon.alt = 'Show password';#}
+{#    togglePassword.setAttribute('aria-label', 'Show password');#}
+{#  }#}
+{##}
+{#  // Keep focus on password field#}
+{#  passwordInput.focus();#}
+{#});#}
+{##}
+{#// Optional: Toggle with Enter key for accessibility#}
+{#togglePassword.addEventListener('keydown', function(e) {#}
+{#  if (e.key === 'Enter' || e.key === ' ') {#}
+{#    e.preventDefault();#}
+{#    togglePassword.click();#}
+{#  }#}
+{#});#}
+{##}
+{#// Optional: Form validation#}
+{#document.getElementById('loginForm').addEventListener('submit', function(e) {#}
+{#  const email = document.getElementById('email').value;#}
+{#  const password = document.getElementById('password').value;#}
+{##}
+{#  // Basic validation#}
+{#  if (!email || !password) {#}
+{#    e.preventDefault();#}
+{#    alert('Please fill in both email and password fields.');#}
+{#    return false;#}
+{#  }#}
+{##}
+{#  // Email format validation#}
+{#  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;#}
+{#  if (!emailRegex.test(email)) {#}
+{#    e.preventDefault();#}
+{#    alert('Please enter a valid email address.');#}
+{#    return false;#}
+{#  }#}
+{##}
+{#  return true;#}
+{#});#}
+{##}
+{#// Optional: Remember me functionality#}
+{#document.addEventListener('DOMContentLoaded', function() {#}
+{#  const rememberMe = document.getElementById('rememberMe');#}
+{#  const emailInput = document.getElementById('email');#}
+{##}
+{#  // Check if credentials are saved#}
+{#  const savedEmail = localStorage.getItem('rememberedEmail');#}
+{#  if (savedEmail) {#}
+{#    emailInput.value = savedEmail;#}
+{#    rememberMe.checked = true;#}
+{#  }#}
+{##}
+{#  // Save email if remember me is checked on submit#}
+{#  document.getElementById('loginForm').addEventListener('submit', function() {#}
+{#    if (rememberMe.checked) {#}
+{#      localStorage.setItem('rememberedEmail', emailInput.value);#}
+{#    } else {#}
+{#      localStorage.removeItem('rememberedEmail');#}
+{#    }#}
+{#  });#}
+{#});#}
+{#</script>#}
+
+</body>
+</html>

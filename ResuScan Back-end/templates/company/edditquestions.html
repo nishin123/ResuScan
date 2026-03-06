@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ResuScan – Edit Question</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#2563eb;
+    --danger:#dc2626;
+    --success:#16a34a;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(0,0,0,0.08);
+}
+
+*{
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    padding:40px;
+}
+
+/* Card */
+.form-card{
+    max-width:700px;
+    margin:auto;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:32px;
+}
+
+/* Header */
+.form-card h2{
+    margin:0;
+    font-size:1.7rem;
+}
+
+.form-card p{
+    margin-top:6px;
+    color:var(--muted);
+    margin-bottom:28px;
+}
+
+/* Fields */
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+input, textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    font-size:.95rem;
+}
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+
+/* Errors */
+.error{
+    color:var(--danger);
+    font-size:.85rem;
+    margin-top:6px;
+    display:none;
+}
+
+.invalid{
+    border-color:var(--danger);
+}
+
+/* Correct answer highlight */
+.correct-input{
+    border-color:#bbf7d0;
+    background:#f0fdf4;
+}
+
+/* Button */
+.submit-btn{
+    width:100%;
+    padding:14px;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    font-size:.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Grid */
+.option-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+/* Mobile */
+@media(max-width:700px){
+    body{
+        padding:20px;
+    }
+    .option-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="form-card">
+    <h2>Edit Question</h2>
+    <p>Update question, options and correct answer</p>
+
+    <form method="post" action="/editquestions_post/{{ id }}" onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label>Question</label>
+            <textarea name="textarea" id="question" required>{{ data.questions }}</textarea>
+            <div class="error" id="questionError">Question must be at least 10 characters</div>
+        </div>
+
+        <div class="option-grid">
+            <div class="form-group">
+                <label>Option A</label>
+                <input type="text" name="textfield2" id="optA" required value="{{ data.option_a }}">
+            </div>
+
+            <div class="form-group">
+                <label>Option B</label>
+                <input type="text" name="textfield3" id="optB" required value="{{ data.option_b }}">
+            </div>
+
+            <div class="form-group">
+                <label>Option C</label>
+                <input type="text" name="textfield4" id="optC" required value="{{ data.option_c }}">
+            </div>
+
+            <div class="form-group">
+                <label>Option D</label>
+                <input type="text" name="textfield5" id="optD" required value="{{ data.option_d }}">
+            </div>
+        </div>
+
+        <div class="error" id="optionError">Options must be unique and not empty</div>
+
+        <div class="form-group">
+            <label>Correct Answer</label>
+            <input type="text"
+                   name="textfield6"
+                   id="correct"
+                   required
+                   value="{{ data.corrected_answer }}"
+                   class="correct-input">
+            <div class="error" id="correctError">
+                Correct answer must exactly match one of the options
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Update Question
+        </button>
+
+    </form>
+</div>
+
+<script>
+function validateForm(){
+    let valid = true;
+
+    const question = document.getElementById("question");
+    const options = [
+        document.getElementById("optA"),
+        document.getElementById("optB"),
+        document.getElementById("optC"),
+        document.getElementById("optD")
+    ];
+    const correct = document.getElementById("correct");
+
+    const questionError = document.getElementById("questionError");
+    const optionError = document.getElementById("optionError");
+    const correctError = document.getElementById("correctError");
+
+    // Reset
+    document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+    document.querySelectorAll("input, textarea").forEach(i => i.classList.remove("invalid"));
+
+    // Question length
+    if (question.value.trim().length < 10){
+        questionError.style.display = "block";
+        question.classList.add("invalid");
+        valid = false;
+    }
+
+    // Options validation
+    const optionValues = options.map(o => o.value.trim());
+    const uniqueOptions = new Set(optionValues);
+
+    if (optionValues.includes("") || uniqueOptions.size !== 4){
+        optionError.style.display = "block";
+        options.forEach(o => o.classList.add("invalid"));
+        valid = false;
+    }
+
+    // Correct answer must match one option
+    if (!optionValues.includes(correct.value.trim())){
+        correctError.style.display = "block";
+        correct.classList.add("invalid");
+        valid = false;
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>

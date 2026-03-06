@@ -1,0 +1,259 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#  <table width="444" height="377" border="1">#}
+{#    <tr>#}
+{#      <th width="96" scope="row">Job Title</th>#}
+{#      <td width="336"><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Description</th>#}
+{#      <td><label for="textarea"></label>#}
+{#      <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Skill</th>#}
+{#      <td><label for="textarea2"></label>#}
+{#      <textarea name="textarea2" id="textarea2" cols="45" rows="5"></textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Experience</th>#}
+{#      <td><label for="textarea3"></label>#}
+{#      <textarea name="textarea3" id="textarea3" cols="45" rows="5"></textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Salary</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">From Date</th>#}
+{#      <td><label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">To Date</th>#}
+{#      <td><label for="textfield4"></label>#}
+{#      <input type="text" name="textfield4" id="textfield4" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Add Vacancy — ResuScan</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --card-bg: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+    }
+
+    body {
+      background: linear-gradient(180deg,#f4f8ff 0%, #fbfdff 100%);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      padding: 36px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .card-clean {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 22px;
+      border: 1px solid rgba(14, 30, 80, 0.06);
+      box-shadow: 0 12px 30px rgba(14, 22, 40, 0.04);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .card-clean:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(14,22,40,0.06); }
+
+    .page-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .page-sub { color: var(--muted); font-size: .95rem; margin-bottom: 18px; }
+
+    label.form-label-custom {
+      font-weight: 600;
+      color: #334155;
+      font-size: .92rem;
+    }
+
+    .form-control, .form-select, .form-floating > .form-control {
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #e6eef9;
+      box-shadow: none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .small-note { color: #94a3b8; font-size: .86rem; }
+
+    /* Fancy submit button */
+    .btn-primary-fancy {
+      background: linear-gradient(90deg,#2563eb,#60a5fa);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(37,99,235,0.16);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn-primary-fancy:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 42px rgba(37,99,235,0.20);
+    }
+
+    .input-group .bi { color: var(--muted); font-size: 1rem; }
+
+    /* Responsive layout */
+    @media (max-width: 720px) {
+      .two-col { display:block; }
+      .two-col .col { width:100%; }
+    }
+
+    /* Tiny helper for required star */
+    .req { color: #ef4444; margin-left: 4px; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card-clean">
+
+      <div class="d-flex align-items-start justify-content-between mb-2">
+        <div>
+          <div class="page-title">Add New Vacancy</div>
+          <div class="page-sub">Create a new job posting — candidates will see this on your company page.</div>
+        </div>
+
+        <div class="text-end">
+          <!-- a small hint area / quick link -->
+          <a href="/viewvaccancy" class="btn btn-outline-secondary btn-sm"><i class="bi bi-list-ul"></i> View All</a>
+        </div>
+      </div>
+
+      <!-- Form: posts to your existing vaccancyadd_post route -->
+      <form method="post" action="/vaccancyadd_post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label-custom">Job Title <span class="req">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-briefcase-fill"></i></span>
+            <input name="textfield" id="jobTitle" type="text" class="form-control" placeholder="e.g. Frontend Developer" required>
+          </div>
+          <div class="small-note mt-1">Clear, short titles get more attention (e.g. "React Developer — 2+ years").</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-custom">Description <span class="req">*</span></label>
+          <textarea name="textarea" id="description" class="form-control" placeholder="Describe the role, responsibilities and team..." required></textarea>
+          <div class="small-note mt-1">Include role summary, day-to-day tasks, and a short paragraph about your company.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-custom">Skill (Key Technologies)</label>
+          <textarea name="textarea2" id="skills" class="form-control" placeholder="e.g. React, Redux, TypeScript, REST APIs"></textarea>
+          <div class="small-note mt-1">Comma-separated skills help search and filtering.</div>
+        </div>
+
+        <div class="row two-col gx-3">
+          <div class="col-md-6 mb-3">
+            <label class="form-label-custom">Experience</label>
+            <input name="textarea3" id="experience" type="text" class="form-control" placeholder="e.g. 2-4 years">
+            <div class="small-note mt-1">Use ranges like "2-4 years" or "Freshers".</div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label-custom">Salary (per annum)</label>
+            <div class="input-group">
+              <span class="input-group-text bg-white"><i class="bi bi-currency-rupee"></i></span>
+              <input name="textfield2" id="salary" type="text" class="form-control" placeholder="e.g. 300000 - 500000">
+            </div>
+            <div class="small-note mt-1">Optional — you can use ranges or "Competitive".</div>
+          </div>
+        </div>
+
+        <div class="row gx-3">
+          <div class="col-md-6 mb-3">
+            <label class="form-label-custom">From Date</label>
+            <input name="textfield3" id="fromDate" type="date" class="form-control">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label-custom">To Date</label>
+            <input name="textfield4" id="toDate" type="date" class="form-control">
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between mt-4">
+          <div class="small-note">All fields marked <span class="req">*</span> are required.</div>
+
+          <button type="submit" class="btn btn-primary-fancy">
+            <i class="bi bi-plus-lg me-2"></i> Add Vacancy
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Optional small script to enhance UX -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // simple client-side validation enhancement (keeps server-side intact)
+    (function(){
+      var form = document.querySelector('form');
+      form.addEventListener('submit', function (e) {
+        // basic check for required fields
+        var job = document.getElementById('jobTitle').value.trim();
+        var desc = document.getElementById('description').value.trim();
+        if (!job || !desc) {
+          e.preventDefault();
+          alert('Please fill in required fields: Job Title and Description.');
+          return false;
+        }
+      }, false);
+    })();
+  </script>
+</body>
+</html>

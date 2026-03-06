@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ResuScan – Edit Schedule</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#2563eb;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(0,0,0,0.08);
+}
+
+*{
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    padding:40px;
+}
+
+/* Card */
+.form-card{
+    max-width:520px;
+    margin:auto;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:32px;
+}
+
+/* Header */
+.form-card h2{
+    margin:0;
+    font-size:1.6rem;
+}
+
+.form-card p{
+    margin-top:6px;
+    color:var(--muted);
+    margin-bottom:28px;
+}
+
+/* Fields */
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    font-size:.95rem;
+}
+
+input:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+
+/* Error styles */
+.error{
+    color:#dc2626;
+    font-size:.85rem;
+    margin-top:6px;
+    display:none;
+}
+
+input.invalid{
+    border-color:#dc2626;
+}
+
+/* Button */
+.submit-btn{
+    width:100%;
+    padding:14px;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    font-size:.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Mobile */
+@media(max-width:600px){
+    body{
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="form-card">
+    <h2>Edit Schedule</h2>
+    <p>Update the date, time and venue</p>
+
+    <form method="post" action="" onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="textfield" id="dateField" required>
+            <div class="error" id="dateError">Date cannot be in the past</div>
+        </div>
+
+        <div class="form-group">
+            <label>Time</label>
+            <input type="time" name="textfield2" id="timeField" required>
+            <div class="error" id="timeError">Please select a valid time</div>
+        </div>
+
+        <div class="form-group">
+            <label>Venue</label>
+            <input
+                type="text"
+                name="textfield3"
+                id="venueField"
+                required
+                minlength="3"
+                maxlength="100"
+                pattern="[A-Za-z0-9 ,.-]+"
+                placeholder="Interview location">
+            <div class="error" id="venueError">
+                Venue must be at least 3 characters and contain valid text
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Update Schedule
+        </button>
+
+    </form>
+</div>
+
+<script>
+function validateForm(){
+    let valid = true;
+
+    const dateInput = document.getElementById("dateField");
+    const timeInput = document.getElementById("timeField");
+    const venueInput = document.getElementById("venueField");
+
+    const dateError = document.getElementById("dateError");
+    const timeError = document.getElementById("timeError");
+    const venueError = document.getElementById("venueError");
+
+    // Reset errors
+    document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+    document.querySelectorAll("input").forEach(i => i.classList.remove("invalid"));
+
+    // Date validation (no past dates)
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const selectedDate = new Date(dateInput.value);
+
+    if (selectedDate < today){
+        dateError.style.display = "block";
+        dateInput.classList.add("invalid");
+        valid = false;
+    }
+
+    // Time validation
+    if (!timeInput.value){
+        timeError.style.display = "block";
+        timeInput.classList.add("invalid");
+        valid = false;
+    }
+
+    // Venue validation
+    if (!venueInput.checkValidity()){
+        venueError.style.display = "block";
+        venueInput.classList.add("invalid");
+        valid = false;
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>

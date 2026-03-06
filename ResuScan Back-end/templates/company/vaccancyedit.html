@@ -1,0 +1,207 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="/vccancyedit_post/{{ data.id }}">#}
+{#  <table width="444" height="377" border="1">#}
+{#    <tr>#}
+{#      <th width="96" scope="row">Job Title</th>#}
+{#      <td width="336"><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" {{ data.job_title }}/></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Description</th>#}
+{#      <td><label for="textarea"></label>#}
+{#      <textarea name="textarea" id="textarea" cols="45" rows="5">{{ data.description }}</textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Skill</th>#}
+{#      <td><label for="textarea2"></label>#}
+{#      <textarea name="textarea2" id="textarea2" cols="45" rows="5">{{ data.skills }}</textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Experience</th>#}
+{#      <td><label for="textarea3"></label>#}
+{#      <textarea name="textarea3" id="textarea3" cols="45" rows="5">{{ data.expirence }}</textarea></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Salary</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" value="{{ data.salary_range }}" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">From Date</th>#}
+{#      <td><label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" value="{{ data.from_date }}" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">To Date</th>#}
+{#      <td><label for="textfield4"></label>#}
+{#      <input type="text" name="textfield4" id="textfield4" value="{{ data.to_date }}" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Edit" /></th>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Vacancy</title>
+
+<style>
+:root{
+  --primary:#e6f2ff;
+  --accent:#3b82f6;
+  --border:#cfe3ff;
+  --text:#1e293b;
+}
+
+*{
+  box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#f4f8ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  width:520px;
+  background:#ffffff;
+  border-radius:16px;
+  box-shadow:0 20px 40px rgba(59,130,246,0.15);
+  padding:28px;
+}
+
+.card h2{
+  margin:0 0 20px;
+  color:var(--text);
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  margin-bottom:6px;
+  color:#475569;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#f8fbff;
+  resize:none;
+}
+
+input:disabled,
+textarea:disabled{
+  color:#475569;
+}
+
+.actions{
+  margin-top:22px;
+  text-align:center;
+}
+
+button{
+  padding:10px 26px;
+  border-radius:999px;
+  border:none;
+  font-size:15px;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+}
+
+button.save{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Vacancy Details</h2>
+
+  <form method="post" action="/editvaccancy_post/{{ data.id }}">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label>Job Title</label>
+      <input type="text" name="textfield" value="{{ data.job_title }}" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="textarea" rows="3" disabled>{{ data.description }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Skills</label>
+      <textarea name="textarea2" rows="3" disabled>{{ data.skills }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Experience</label>
+      <textarea name="textarea3" rows="3" disabled>{{ data.experience }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Salary</label>
+      <input type="text" name="textfield2" value="{{ data.salary_range }}" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>From Date</label>
+      <input type="text" name="textfield3" value="{{ data.from_date }}" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>To Date</label>
+      <input type="text" name="textfield4" value="{{ data.to_date }}" disabled>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="editBtn">Edit</button>
+      <button type="submit" class="save" id="saveBtn">Save</button>
+    </div>
+  </form>
+</div>
+
+<script>
+const editBtn = document.getElementById("editBtn");
+const saveBtn = document.getElementById("saveBtn");
+const fields = document.querySelectorAll("input, textarea");
+
+editBtn.onclick = () => {
+  fields.forEach(f => f.disabled = false);
+  editBtn.style.display = "none";
+  saveBtn.style.display = "inline-block";
+};
+</script>
+
+</body>
+</html>
